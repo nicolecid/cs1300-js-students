@@ -1,6 +1,6 @@
 var corsApiUrl = "https://cors-anywhere.herokuapp.com/";
 // TODO: REPLACE YOUR TOKEN
-var apiToken = "gWcgTiVGEg0JdFsJ8KATBwED4Pt5k3W_olkfhmv68bE";
+var apiToken = "?token=gWcgTiVGEg0JdFsJ8KATBwED4Pt5k3W_olkfhmv68bE";
 
 // CORS stands for "cross origin resource sharing" -- you'll be making http requests in order
 // DON'T CHANGE THIS: fetches the data from the API endpoint
@@ -24,8 +24,19 @@ const corsPromise = () =>
 corsPromise().then(
   (request) =>
     (request.onload = request.onerror = function () {
-      // TODO: ADD FUNCTION, ETC. FOR WHATEVER YOU WANT TO DO ONCE THE DATA IS RECEIVED
+        let data = JSON.parse(request.response);
+        console.log(data);
+        let addToPage = "";
+        data.data.forEach(function (plant) {
+            console.log(plant);
+            addToPage += `<div class="plant">
+                    <h1>${plant.common_name}</h1>
+                    <h3>Scientific Name:${plant.scientific_name}</h3>
+                    <h3>Family: ${plant.family}</h3>
+                    <h3>Common Name: ${plant.family_common_name}</h3>
+                    <h3>Genus: ${plant.genus}</h3>
+                </div>`;
+        });
+        document.getElementById("body").innerHTML = addToPage;
     })
 );
-
-//// TODO: ADD WHATEVER FUN CONTENT YOU WANT ////
